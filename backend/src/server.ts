@@ -1,22 +1,30 @@
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
+import http from "http";
+import app from "./app";
 import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
-
-import adminRoutes from "./routes/admin.routes";
+import mongoose from "mongoose";
 
 dotenv.config();
 
-const app = express();
+const PORT = process.env.PORT || 8000;
 
-app.use(express.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-app.use(cookieParser());
+const server = http.createServer(app);
 
-app.use("/admin", adminRoutes);
-
-app.listen(8000, () => {
-    console.log("Server is running on port 8000");
-});
-
+async function connect(){
+    mongoose.connection.once('open', () => {
+        console.log('Connected to database');
+    });
+    mongoose.connection.on('error', (err) => {
+        console.log('Error connecting to database', err);
+        return process.exit(1);
+    });
+    try {
+        await mongoose.connect(process.env.MONGO_URI!);
+        server.listen(PORT, () => {
+          console.log(`Server is running on port ${PORT}`);
+        });
+    } catch (error) {
+        console.log('Error connecting to database', error);
+        return process.exit(1);
+    }
+}
+connect();
