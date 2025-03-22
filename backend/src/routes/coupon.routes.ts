@@ -28,15 +28,16 @@ router.post(
         await newSession.save();
       }
 
-      const coupon = await Coupon.findOne({ status: "available" }).sort({
-        _id: 1,
-      });
-      if (!coupon) {
-        return res.status(400).json({ message: "No coupons available" });
-      }
-      coupon.status = "claimed";
-      coupon.assignedTo = userIp;
-      coupon.claimedAt = new Date();
+      const coupon = await Coupon.findOne({ status: "available" }).sort({ priority: 1 });
+
+    if (!coupon) {
+      return res.status(400).json({ message: "No coupons available" });
+    }
+
+    coupon.status = "claimed";
+    coupon.assignedTo = userIp;
+    coupon.claimedAt = new Date();
+    coupon.priority += 1;
       await coupon.save();
 
       await Claim.updateOne(
