@@ -67,7 +67,7 @@ router.post("/login", async (req: Request, res: Response): Promise<any> => {
 
         const token = jwt.sign({ username: existingAdmin.username, id: existingAdmin._id }, Secret, { expiresIn: "24h" });
 
-        res.cookie("adminToken", token, { httpOnly: true });
+        res.cookie("adminToken", token);
         res.json({ success: true, token });
     } catch (error) {
         console.log(error);
@@ -78,7 +78,7 @@ router.post("/login", async (req: Request, res: Response): Promise<any> => {
 
 router.post("/logout", async (req: Request, res: Response):Promise<any> => {
     try {
-        res.clearCookie("adminToken", { httpOnly: true, secure: true });
+        res.clearCookie("adminToken", { secure: true });
         return res.status(200).json({ success: true, message: "Logout successful" });
     } catch (error) {
         console.error("Logout error:", error);

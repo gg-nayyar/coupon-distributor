@@ -47,7 +47,7 @@ router.post(
       );
 
       res
-        .cookie("sessionId", userSession, { httpOnly: true })
+        .cookie("sessionId", userSession)
         .json({
           message: "Coupon claimed successfully",
           couponCode: coupon.code,

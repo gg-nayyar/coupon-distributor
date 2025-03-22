@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.enable("trust proxy");
-app.use(cors({ origin: "*", credentials: true }));
+app.use(cors({ origin: "https://coupon-distributor-mauve.vercel.app", credentials: true }));
 app.use(cookieParser());
 
 app.use("/admin", adminRoutes);
