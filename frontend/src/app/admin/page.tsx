@@ -27,7 +27,7 @@ export default function AdminPage() {
         const storedToken = localStorage.getItem("adminToken");
         if (!storedToken) throw new Error("No token found");
 
-        const response = await axios.get("http://localhost:5000/admin/token", {
+        const response = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URI + "/admin/token", {
           headers: { Authorization: `Bearer ${storedToken}` },
         });
 
@@ -53,7 +53,7 @@ export default function AdminPage() {
 
     try {
       const response = await axios.get<Coupon[]>(
-        "http://localhost:5000/admin/coupon/list",
+        process.env.NEXT_PUBLIC_BACKEND_URI + "/admin/coupon/list",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -75,7 +75,7 @@ export default function AdminPage() {
         toast.error("Unauthorized! Please log in.");
         return;
       }
-      await axios.post("http://localhost:5000/admin/coupon/add", couponData, {
+      await axios.post(process.env.NEXT_PUBLIC_BACKEND_URI + "/admin/coupon/add", couponData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Coupon added successfully!");
@@ -89,7 +89,7 @@ export default function AdminPage() {
     try {
       if (!token) return toast.error("Unauthorized! Please log in.");
       const response = await axios.put(
-        `http://localhost:5000/admin/coupon/update/${id}`,
+        process.env.NEXT_PUBLIC_BACKEND_URI + `/admin/coupon/update/${id}`,
         { status },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -106,7 +106,7 @@ export default function AdminPage() {
   const handleDeleteCoupon = async (id: string) => {
     try {
       if (!token) return toast.error("Unauthorized! Please log in.");
-      await axios.delete(`http://localhost:5000/admin/coupon/delete/${id}`, {
+      await axios.delete(process.env.NEXT_PUBLIC_BACKEND_URI + `/admin/coupon/delete/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Coupon deleted successfully!");
@@ -118,7 +118,7 @@ export default function AdminPage() {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/admin/logout", {}, {withCredentials: true});
+      await axios.post(process.env.NEXT_PUBLIC_BACKEND_URI + "/admin/logout", {}, {withCredentials: true});
       localStorage.removeItem("adminToken");
       toast.success("Logged out successfully");
       router.push("/admin/login");

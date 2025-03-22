@@ -24,7 +24,7 @@ export default function ClaimCouponPage() {
     setCoupon(null)
 
     try {
-      const response = await axios.post<ClaimCouponResponse>("http://localhost:5000/coupon/claim")
+      const response = await axios.post<ClaimCouponResponse>(process.env.NEXT_PUBLIC_BACKEND_URI + "/coupon/claim")
       setCoupon(response.data.couponCode)
       toast.success("Coupon claimed successfully!")
     } catch (err: any) {

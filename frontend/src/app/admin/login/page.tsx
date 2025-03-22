@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
       if (token) {
         try {
           // Replace with your actual validation endpoint
-          await axios.get("http://localhost:5000/admin/token", {
+          await axios.get(process.env.NEXT_PUBLIC_BACKEND_URI + "/admin/token", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -66,7 +66,7 @@ export default function AdminLoginPage() {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/admin/login",
+        process.env.NEXT_PUBLIC_BACKEND_URI + "/admin/login",
         {
           username,
           password,
