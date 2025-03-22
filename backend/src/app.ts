@@ -8,6 +8,7 @@ import couponRoutes from "./routes/coupon.routes";
 const app = express();
 
 app.use(express.json());
+app.enable("trust proxy");
 app.use(cors({ origin: "*", credentials: true }));
 app.use(cookieParser());
 
