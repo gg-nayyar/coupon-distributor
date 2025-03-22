@@ -1,0 +1,21 @@
+{
+  "name": "coupon-distribution",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/gg-nayyar/coupon-distributor#readme",
+  "bugs": {
+    "url": "https://github.com/gg-nayyar/coupon-distributor/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gg-nayyar/coupon-distributor.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc -p ./backend && node ./backend/dist/server.js"
+  }
+}

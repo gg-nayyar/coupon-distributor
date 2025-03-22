@@ -2,8 +2,11 @@ import http from "http";
 import app from "./app";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import path from "node:path";
 
-dotenv.config();
+dotenv.config({
+    path: path.join(__dirname, '../.env')
+});
 
 const PORT = process.env.PORT || 8000;
 
